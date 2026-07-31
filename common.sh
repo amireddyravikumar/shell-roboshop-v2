@@ -13,7 +13,7 @@ G="\e[32m"
 Y="\e[33m"
 N="\e[0m"
 SCRIPT_DIR=$PWD
-echo -e "$TIMESTAMP [INFO] Script started: $SECONDS"
+echo -e "$TIMESTAMP [INFO] Script started:"
 
 # if [ $USERID -ne 0 ]; then
 #     echo -e "$R Please run with root access $N" | tee -a $LOG_FILE
