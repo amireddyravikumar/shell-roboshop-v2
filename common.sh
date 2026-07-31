@@ -44,9 +44,9 @@ copy_repo(){
     VALIDATE $? "Adding $app_name Repo"
 }
 
-systemd_setup(){
+# systemd_setup(){
 
-}
-app_setup(){
+# }
+# app_setup(){
 
-}
+# }
