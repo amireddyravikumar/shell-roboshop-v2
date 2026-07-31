@@ -89,17 +89,17 @@ app_restart(){
     VALIDATE $? "Restarting $app_name"
 }
 java_setup(){
-    dnf install maven -y &>>$LOGS_FILE
+    dnf install maven -y &>>$LOG_FILE
     VALIDATE $? "Installing Maven"
 
-    mvn clean package  &>>$LOGS_FILE
+    mvn clean package  &>>$LOG_FILE
     mv target/$app_name-1.0.jar $app_name.jar 
     VALIDATE $? "Installing dependencies"
 }
 python_setup(){
-    dnf install python3 gcc python3-devel -y &>>$LOGS_FILE
+    dnf install python3 gcc python3-devel -y &>>$LOG_FILE
     VALIDATE $? "Installing Python"
     
-    pip3 install -r requirements.txt  &>>$LOGS_FILE
+    pip3 install -r requirements.txt  &>>$LOG_FILE
     VALIDATE $? "Installing dependencies"
 }
