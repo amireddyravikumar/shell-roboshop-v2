@@ -88,3 +88,18 @@ app_restart(){
     systemctl restart $app_name &>>$LOG_FILE
     VALIDATE $? "Restarting $app_name"
 }
+java_setup(){
+    dnf install maven -y &>>$LOGS_FILE
+    VALIDATE $? "Installing Maven"
+
+    mvn clean package  &>>$LOGS_FILE
+    mv target/$app_name-1.0.jar $app_name.jar 
+    VALIDATE $? "Installing dependencies"
+}
+python_setup(){
+    dnf install python3 gcc python3-devel -y &>>$LOGS_FILE
+    VALIDATE $? "Installing Python"
+    
+    pip3 install -r requirements.txt  &>>$LOGS_FILE
+    VALIDATE $? "Installing dependencies"
+}
