@@ -38,3 +38,15 @@ print_exec_time(){
     TIMESTAMP=$(date "+%Y-%m-%d %H:%M:%S")
     echo -e "$TIMESTAMP [INFO] Script executed in $G $SECONDS seconds $N"
 }
+
+copy_repo(){
+    cp $app_name.repo /etc/yum.repos.d/$app_name.repo
+    VALIDATE $? "Adding $app_name Repo"
+}
+
+systemd_setup(){
+
+}
+app_setup(){
+
+}
