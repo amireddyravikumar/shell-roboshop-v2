@@ -44,9 +44,47 @@ copy_repo(){
     VALIDATE $? "Adding $app_name Repo"
 }
 
-# systemd_setup(){
+systemd_setup(){
+    cp $SCRIPT_DIR/$app_name.service /etc/systemd/system/$app_name.service
+    VALIDATE $? "created systemctl service"
+    
+    systemctl daemon-reload
+    systemctl enable $app_name &>>$LOG_FILE
+    VALIDATE $? "Enabled $app_name"
+}
+app_setup(){
+    id roboshop &>>$LOG_FILE
+    if [ $? -ne 0 ]; then
+        useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop  &>>$LOG_FILE
+        VALIDATE $? "Creating roboshop system user"
+    else 
+        echo -e "System user roboshop already created.. $Y SKIPPING $N" 
+    fi
 
-# }
-# app_setup(){
+    rm -rf /app
+    VALIDATE $? "Removing existing code"
 
-# }
+    rm -rf /tmp/$app_name.zip
+    VALIDATE $? "Removed $app_name zip"
+
+    mkdir -p /app  &>>$LOG_FILE
+    VALIDATE $? "Creating app directory"
+
+    curl -o /tmp/$app_name.zip https://roboshop-artifacts.s3.amazonaws.com/$app_name-v3.zip &>>$LOG_FILE
+    cd /app 
+    unzip /tmp/$app_name.zip &>>$LOG_FILE
+    VALIDATE $? "Downloaded and extracted $app_name code"
+}
+nodejs_setup(){
+    dnf module disable nodejs -y &>>$LOG_FILE
+    dnf module enable nodejs:20 -y &>>$LOG_FILE
+    dnf install nodejs -y &>>$LOG_FILE
+    VALIDATE $? "Installing NodeJS:20"
+    npm install &>>$LOG_FILE
+    VALIDATE $? "Install dependencies"
+}
+
+app_restart(){
+    systemctl restart $app_name &>>$LOG_FILE
+    VALIDATE $? "Restarting $app_name"
+}
