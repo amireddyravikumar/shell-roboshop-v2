@@ -1,4 +1,5 @@
 #!/bin/bash
+MYSQL_HOST=mysql.amireddyravi.space
 app_name="shipping"
 source ./common.sh
 
@@ -11,7 +12,7 @@ systemd_setup
 dnf install mysql -y &>>$LOG_FILE
 VALIDATE $? "created MySql Client"
 
-mysql -h mysql.amireddyravi.space -uroot -pRoboShop@1 -e "use cities" &>>$LOG_FILE
+mysql -h $MYSQL_HOST -uroot -pRoboShop@1 -e "use cities" &>>$LOG_FILE
 if [ $? -ne 0 ]; then
     mysql -h $MYSQL_HOST -uroot -pRoboShop@1 < /app/db/schema.sql
     mysql -h $MYSQL_HOST -uroot -pRoboShop@1 < /app/db/app-user.sql 
