@@ -18,3 +18,5 @@ VALIDATE $? "Allowing remote connection to MongoDB"
 
 systemctl restart mongod
 VALIDATE $? "Restarting MongoDB"
+
+print_exec_time
